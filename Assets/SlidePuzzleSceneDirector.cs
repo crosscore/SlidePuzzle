@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SlidePuzzleSceneDirector : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class SlidePuzzleSceneDirector : MonoBehaviour
         {
             startPositions.Add(piece.transform.position);
         }
+
+        // ボタンのクリックイベントを設定
+        // buttonRetry.GetComponent<Button>().onClick.AddListener(OnClickRetryButton);
 
         // ゲーム開始時にピースをシャッフル
         ShufflePieces();
@@ -101,11 +105,24 @@ public class SlidePuzzleSceneDirector : MonoBehaviour
     public void OnClickRetryButton()
     {
         print("OnClickRetryButton");
+
+        // ピースを初期位置に戻す
+        ResetPieces();
+
         // ピースをシャッフル
         ShufflePieces();
 
         // リトライボタンを非表示
         buttonRetry.SetActive(false);
+    }
+
+    // ピースを初期位置に戻す関数
+    private void ResetPieces()
+    {
+        for (int i = 0; i < pieces.Count; i++)
+        {
+            pieces[i].transform.position = startPositions[i];
+        }
     }
 
     // ピースをシャッフルする関数

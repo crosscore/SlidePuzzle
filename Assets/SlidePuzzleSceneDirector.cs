@@ -36,7 +36,20 @@ public class SlidePuzzleSceneDirector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // マウス入力があった場合
+        if (Input.GetMouseButtonDown(0)) {
+            // クリックした位置にあるピースを取得
+            Vector2 tapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            // raycast でクリックした位置にあるオブジェクトを取得
+            RaycastHit2D hit = Physics2D.Raycast(tapPoint, Vector2.zero);
+            // 衝突判定があった場合
+            if (hit) {
+                // クリックしたピースを取得
+                GameObject histPiece = hit.collider.gameObject;
+                // クリックしたピースと0番のピースを入れ替える
+                SwapPiece(histPiece, GetEmptyPiece(histPiece));
+            }
+        }
     }
 
     // 引数のピースが0番のピースと隣接していたら0番のピースを返す
